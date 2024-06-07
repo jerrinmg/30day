@@ -5,13 +5,16 @@ Now let's get our hands dirty and do some simple programming. Today we are going
 ### Step 1: Arduino IDE and First Sketch
 
 1. Two sections in the first sketch are seen.
-2. void setup()
+```bash
+void setup()
 
 { // one time code }
 
-1. void loop()
+void loop()
 
 { the code that repeats infinity }
+```
+### Specs
 
 1. Now I need to find out the board datasheet. This is the [kit](https://www.amazon.in/Compatible-Mega2560-Ultrasonic-including-30-Projects/dp/B097NP82MZ?th=1) that I have.Upon further inspection I found the exact board that came with the kit. Its an SMD type that costs about [280](https://rees52.com/products/rees52-smd-uno-r3-board-uno-r3-controller-board-uno-r3-smd-atmega328p-board-compatible-with-arduino-ide-rs5560) INR.
 2. Board Details: REES52 UNO R3 Board SMD, Atmega328P Compacitable. RS5560.3. 1) Microcontroller: Atmega328P
@@ -41,7 +44,9 @@ Now let's get our hands dirty and do some simple programming. Today we are going
 13) USB to Serial Chip Model: CH340G
 1. Since this is a clone of the SMD type of UNO R3, this is the datasheet of the [official Arduino SMD]
 3. After finding the official guide for Blinking and [Arduino](https://docs.arduino.cc/tutorials/uno-rev3-smd/Blink/), it says that D13 is the BuiltIn Led. Ah, Arduino has 2 Naming Scheme. Each pin has both a digital pin number (e.g. D13) and a port/pin designation (e.g. PB5). D= Digital P=Pin.
-4. Letme try blinking it using both the naming convention.  
+
+### Blink
+Letme try blinking it using both the naming convention.  
     Error:  
 
 **FIX**: dont put d13 in the name, but use 13. Just the number
