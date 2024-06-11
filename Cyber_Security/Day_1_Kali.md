@@ -17,7 +17,8 @@ Note: I had installed Kali Linux earlier on my system. This is a brief summary o
 9) After nights of running command line commands by dredge typing, ( could not copy paste anything as there was no browser, no internet , no interface no nothing )I managed to get it working somehow.  
 10) The inbuilt WiFi of the laptop is still not working by the way. Have to figure out a way to make it work. It works fine on Ubuntu though. [1]
 11) Make Kali Look cool: This is discouraged by many people, as Kali is a tool and not a way to show off. But I did it anyway. Hyperland + Kali Linux
-  
+  ![image](https://github.com/jerrinmg/30day/assets/166682032/3acd2b8d-7cec-483b-8d95-a5799af16807)
+
 ## B.Fidning the tools 
 1) First find out the tools you want, / the most used tools in Kali Linux
 
