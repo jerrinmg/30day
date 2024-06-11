@@ -1,5 +1,5 @@
 # Day 2: Kali Linux
-Today going to learn task 3 which is a learning task.
+
 ## A. Precautions
 
 Lets continue where we left off yesterday, installing the tools for Kali lInux.
