@@ -9,9 +9,12 @@ Yesterday I worked on installing the IDE. Today we are going to run some basic p
 3. Basically I was trying to launch avrdude to get the hex code from the arduino but unsuccessful.
 
 ### Errors  
-
+![image](https://github.com/jerrinmg/30day/assets/166682032/342f0da8-eaf1-4a64-98cf-f7a889319973)
 
 If you are wondering about the line that had the error here it is. 
+
+![image](https://github.com/jerrinmg/30day/assets/166682032/95ee898d-6598-4696-a241-96916c2ef57e)
+
 ### Knowledge
 
 1. HEX files: I did end up finding [something](https://www.instructables.com/How-to-Get-Code-Program-Back-From-Arduino/) about extracting HEX. Link will be in the additional tasks section ( for another day). That is HEX files is generated and thats the file that is uploaded to the flash of the MC(microcontroller.
