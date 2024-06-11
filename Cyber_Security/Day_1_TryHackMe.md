@@ -1,38 +1,33 @@
-# Day 1: Installation and Setup
+# Day 1: Platform
 
-Decided to work on Arduino IDE using Ubuntu OS to better familiarize myself with the OS and CLI.
+Decided to learn about cyber security on the TryHackMe website. 
 
-## Step 1: Installing the IDE
+## A. Intro to Offensive Security  
 
-1. Go to the Arduino main website and download the AppImage file.
-2. Open Terminal and navigate to the Downloads folder using:
-   ```bash
-   cd ~/Downloads
-   ```
-3. Make the AppImage executable using `chmod`, which is a security function of Linux:
-   ```bash
-   chmod +x filename.AppImage
-   ```
-4. Run the AppImage:
-   ```bash
-   ./filename.AppImage
+1."GoBuster" to brute-force FakeBank's website to find hidden directories and pages. GoBuster will take a list of potential page or directory names and tries accessing a website with each of them; if the page exists, it tells you.
+
+2. Find hidden website pages: eg admin portal, for bank for the admin to transfer money.
+    ```bash
+   gobuster -u http://fakebank.com -w wordlist.txt dir
    ```
 
-## Step 2: Adding the Shortcut to App Launcher
+![image](https://github.com/jerrinmg/30day/blob/1b814ad924651e7f7fc57b77f96f8e7137068fe0/images/day%201%20screenshot%201.png)
+   
 
-Use the following commands to install the app launcher:
+4. Hack the bank !
 
-```bash
-sudo apt install software-properties-common
-sudo add-apt-repository ppa:appimagelauncher-team/stable
-sudo apt update
-sudo apt install appimagelauncher
-```
+You should have found a secret bank transfer page that allows you to transfer money between accounts at the bank (/bank-transfer). Type the hidden page into the FakeBank website on the machine.
 
-Now you can just run the AppImage file. It will launch the launcher app.
+   ```bash
+   www.fakebank/bank-transfer
+   ```
 
-## Step 3 (Optional): Extract Pre-Installed Program (Fun Task)
 
-I noticed that the board is already blinking (brand new Arduino board), so I thought about extracting the pre-installed program on the Arduino. This shall be done the next day (pre-installed program extraction).
+## Success!
+We transferred 767 $ dollars from the FAKE Bank to our account! 
+
+ ![image](https://github.com/jerrinmg/30day/blob/1b814ad924651e7f7fc57b77f96f8e7137068fe0/images/Screenshot%20from%202024-06-04%2000-00-23.png)
+
 
 ## Knowledge
+* GoBuster tool!
