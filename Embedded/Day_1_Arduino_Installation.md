@@ -44,7 +44,12 @@ I noticed that the board is already blinking (brand new Arduino board), so I tho
 2. Two methods to install:
    - Install sh script (yet to be done)
    - AppImage (universal software package format)
-3. PPA (?): This was used in the AppImage launcher repo addition.
+3. PPA (?): This was used in the AppImage launcher repo addition. PPA do not support upgrading
+4. Code to remove borken PPA entry from source list
+
+   ```
+   sudo rm /etc/apt/sources.list.d/appimagelauncher-team-ubuntu-stable-noble.sources
+   ```
 
 ## Additional Tasks
 
