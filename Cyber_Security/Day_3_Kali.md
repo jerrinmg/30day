@@ -2,24 +2,163 @@
 
 As Kali Linux OS that I had installed earlier was not functioning properly ( No wifi detetction of onboard Laptop WiFi card, No sound and some other issues ) so I decided to reinstall the OS. 
 
-## A. Installing the OS on the system 
+# Dual-Booting Kali Linux and Ubuntu: A Comprehensive Guide
 
-1) Download the OS, flash it using Rufus.
-2) Load the OS onto a pendrive, boot it from the pendrive using BIOS bootloader order movement to put the USB at the top. 
-3)Follow the installation guide or steps in the installer, 
-4) Disk allocation: note as Ubuntu was already installed, you can share the home directory. But I still need the root ( / ) and ____ ( I forgot ). Swap area with a memory allocation = your current Ram Memory should be created.  I also allocated space as well as for Eifi?  I think it only needs 100 mb, I think I have done this by installing Ubuntu. This block of instruction is a bit unclear as I dont remember the exact steps I had done.
-5) In the installation step, I was getting the error that I was not able to install the extra tools. ( later on I found out that this was one of the main reasons to install Kali, ie the preinstalled or to be preinstalled tools).
-6) So to avoid the error, I had to opt to not install any of the tools. Later on I found out ( thanks to reddit ) the reason why the tools could not be installed was because of Windows Defender fiddling with the OS during the flashing stage using Rufus. Pesky Windows Defender! Next time Ill have to disable it for flashing.
-7) So as a result, I had nothing but CLI as a result of the installation. Then I thought ah , I can just install a GUI, but unfortunately there was no internet. Kali was not detecting my laptop’s inbuilt wifi card.
-8) Thankfully I had a wireless adapter, using that I was able to connect to the internet and download the various shenanigans, the GUI etc.
-9) After nights of running command line commands by dredge typing, ( could not copy paste anything as there was no browser, no internet , no interface no nothing )I managed to get it working somehow.  
-10) The inbuilt WiFi of the laptop is still not working by the way. Have to figure out a way to make it work. It works fine on Ubuntu though. [1]
-11) Make Kali Look cool: This is discouraged by many people, as Kali is a tool and not a way to show off. But I did it anyway. Hyperland + Kali Linux
-  ![image](https://github.com/jerrinmg/30day/assets/166682032/3acd2b8d-7cec-483b-8d95-a5799af16807)
+## Introduction
 
-## B.Fidning the tools 
-1) First find out the tools you want, / the most used tools in Kali Linux
+Setting up a dual-boot system with Kali Linux and Ubuntu on separate SSDs was a complex process. This guide chronicles the journey, challenges, and solutions encountered while setting up such a system. It aims to provide a reference for anyone attempting a similar setup.
 
-![image](https://github.com/jerrinmg/30day/assets/166682032/74ae71d6-7fa1-4554-98e6-a47e3078dcb1)
-![image](https://github.com/jerrinmg/30day/assets/166682032/26023758-1a2d-4fe7-9508-747053ebed3f)
-2) Precatuions ! Step 2) Okay before doing that  Ill have to find out if installing packages and tools reveals my ip and whether I need to proxychain or hide my steps before doing this. I was thinking of doing that as the next step, but I guess It  cant wait.
+## Table of Contents
+1. [Initial Setup and Preparation](#initial-setup-and-preparation)
+2. [Checksum Verification](#checksum-verification)
+3. [First Kali Linux Installation Attempt](#first-kali-linux-installation-attempt)
+4. [Dealing with GRUB Rescue](#dealing-with-grub-rescue)
+5. [Partition Management](#partition-management)
+6. [Using Windows `diskpart` for Boot Entry Management](#using-windows-diskpart-for-boot-entry-management)
+7. [Creating and Managing EFI Partitions](#creating-and-managing-efi-partitions)
+8. [Ubuntu Installation and Swap Area Issues](#ubuntu-installation-and-swap-area-issues)
+9. [Final Configuration and Validation](#final-configuration-and-validation)
+10. [Key Takeaways](#key-takeaways)
+
+## Initial Setup and Preparation
+
+### Hardware and Software:
+- **SSD1:** Contains Windows installation with EFI partition.
+- **SSD2:** Dedicated for Kali Linux and Ubuntu installations.
+
+### Tools Used:
+- Rufus for creating bootable USB drives.
+- GParted for partition management.
+- `bcdedit` and `diskpart` for managing boot entries in Windows.
+
+## Checksum Verification
+
+Before proceeding with the installation, it's crucial to verify the integrity of the downloaded ISO files.
+
+1. **Download the SHA256 checksum file** from the official website.
+2. **Verify the ISO file** using a tool like `sha256sum` on Linux or PowerShell on Windows.
+
+```sh
+# Example command on Linux
+sha256sum kali-linux-2023.2-installer-amd64.iso
+```
+
+Compare the output with the official checksum provided.
+![image](https://github.com/jerrinmg/30day/assets/166682032/7f9b0fab-6569-478c-b656-8dffd4a8767b)
+
+## First Kali Linux Installation Attempt
+
+### Issues Encountered:
+- The installer failed to process the pre-config file.
+- Encountered checksum errors.
+
+### Solution:
+- Verified ISO integrity again.
+- Recreated the bootable USB drive using Rufus.
+
+## Dealing with GRUB Rescue
+
+After the first failed installation, booting into Kali Linux led to the `grub rescue` mode.![image](https://github.com/jerrinmg/30day/assets/166682032/15d22ee6-7aca-4f2d-ab6a-edbef774d2bb)
+
+
+### Steps Taken:
+1. **Identified the issue** with GRUB not finding the correct filesystem.
+2. **Booted using a live USB** to access the system and attempted to repair GRUB.
+
+```sh
+# Example commands to repair GRUB
+sudo mount /dev/sdX /mnt
+sudo grub-install --root-directory=/mnt /dev/sdX
+sudo update-grub
+```
+
+## Partition Management
+
+### Partition Setup:
+- **SSD1 (Windows)**
+  - 100 MB EFI partition
+  - Windows partitions
+- **SSD2**
+  - New EFI partition (550 MB)
+  - Boot partition (1 GB)
+  - Root partition (206 GB for Kali)
+  - Old Ubuntu partition (204 GB)
+  - Swap area (8 GB)
+  - 40 GB left unallocated
+
+## Using Windows `diskpart` for Boot Entry Management
+
+1. **Opened Command Prompt as Administrator**.
+2. **Used `diskpart` to manage and clean disk partitions**.
+Refer to this guide:https://www.youtube.com/watch?v=A9ENrfybOq8&t=1s
+
+## Creating and Managing EFI Partitions
+
+### Creation:
+- Created a new EFI partition during Kali Linux installation.
+- Ensured it was formatted as FAT32.
+
+### Management:
+- Verified and set the boot flag using GParted.
+
+## Ubuntu Installation and Swap Area Issues
+
+### Problem:
+During the Ubuntu installation, the swap area was not automatically detected.
+
+## Final Configuration and Validation
+
+After installing both operating systems and configuring the necessary partitions and boot entries, the system was tested for proper functionality.
+
+### Verification Steps:
+1. **Checked BIOS settings** to ensure correct boot order.
+2. **Validated GRUB menu** to ensure all entries were present.
+3. **Booted into each OS** to verify successful installation and configuration.
+
+## Key Takeaways
+
+- **Persistence and Problem-Solving:** The process required a methodical approach and continuous learning.
+- **Tool Proficiency:** Gained in-depth knowledge of tools like GParted, `diskpart`, and `bcdedit`.
+- **Community and Documentation:** Leveraged community support and extensive documentation to navigate complex issues.
+
+---
+
+By sharing this journey, I hope to provide valuable insights and a detailed reference for anyone facing similar challenges with dual-boot setups.
+
+## Troubleshooting and Lessons Learned
+
+### Existing Dual-Boot Setup
+
+Initially, both Kali Linux and Ubuntu were installed on SSD2. However, Kali Linux was not working correctly while Ubuntu was functioning fine. The initial attempt to reinstall Kali Linux without formatting the `/boot` partition led to issues as both Ubuntu and Kali shared the same partition sizes, making it difficult to identify and manage them properly.
+
+### Reinstallation and GRUB Issues
+
+Upon reinstalling Kali Linux, I encountered persistent GRUB-related issues:
+- The system fell into `grub rescue` mode.
+- Even after formatting the SSD2 partition, the boot menu entries for Kali Linux remained.
+- Ubuntu's swap area was also not working post-reinstallation.
+
+### Comprehensive Reinstallation Strategy
+
+Given the persistent issues, I decided to reinstall both operating systems with updated versions:
+- Ubuntu 20.04 to 24.04
+- Kali Linux 2024.1 to 2024.2
+![image](https://github.com/jerrinmg/30day/assets/166682032/43e82748-4418-4f95-8d12-e5381aca49e4)
+
+This approach was chosen to ensure compatibility and resolve the existing boot issues comprehensively.
+
+### Manual GRUB Cleanup and EFI Management
+
+Despite formatting, the old boot entries persisted. This required:
+- Using `diskpart` in Windows to manually remove unwanted boot entries.
+- Creating and configuring a new EFI partition during the reinstallation process to prevent conflicts.
+
+### Post-Installation Configuration
+
+Upon successful installation:
+- **Swap Area Configuration:** Ensured both operating systems correctly utilized the swap area.
+- **EFI Management:** Copied necessary EFI files to ensure smooth boot operations.
+
+---
+
+This journey encompassed a range of tools, troubleshooting steps, and extensive learning, ultimately leading to a successful dual-boot setup. 
